@@ -1,6 +1,6 @@
 # AdjustFontSize
 
-![screenshot](https://github.com/zats/AdjustFontSize-Xcode-Plugin/master/README/xcode.png)
+![screenshot](https://raw.github.com/zats/AdjustFontSize-Xcode-Plugin/master/README/xcode.png)
 
 A simple plugin for Xcode to adjust font size without going into `Settings` → `Fonts & Colors` and changing each source type.
 

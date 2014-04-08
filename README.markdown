@@ -14,4 +14,4 @@ Install via [Alcatraz](https://github.com/mneorr/Alcatraz).
 
 OR
 
-Clone this repo, build and run ClangFormat, restart Xcode.
+Clone this repo, Build and restart Xcode.

@@ -16,7 +16,7 @@
 @interface DVTFontAndColorTheme : NSObject
 + (instancetype)currentTheme;
 - (void)setFont:(NSFont *)font forNodeTypes:(NSIndexSet *)nodeTypes;
-- (NSFont *)fontForNodeType:(DVTSourceNodeTypes *)nodeType;
+- (NSFont *)fontForNodeType:(NSInteger)nodeType;
 @end
 
 static NSMutableDictionary *ZTSIdentifiersToModify;
@@ -136,11 +136,9 @@ static ZTSAdjustFontSize *sharedPlugin;
 
 - (void)_enumerateFontsForTheme:(DVTFontAndColorTheme *)theme usingBlock:(void (^)(NSFont *font, NSInteger nodeTypeID, BOOL *stop))block {
     [self _initializeMappingIfNeeded];
-    NSLog(@"ZTSIdentifiersToModify %@",ZTSIdentifiersToModify);
     __weak id weakTheme = theme;
     [ZTSIdentifiersToModify enumerateKeysAndObjectsUsingBlock:^(NSString *identifier, NSNumber *nodeId, BOOL *stop) {
         NSFont *font = [weakTheme fontForNodeType:[nodeId integerValue]];
-        NSLog(@"%@ <%@> %@", identifier, nodeId, font);
         block(font, [nodeId integerValue], stop);
     }];
 }

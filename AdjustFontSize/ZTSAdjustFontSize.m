@@ -9,7 +9,7 @@
 #import "ZTSAdjustFontSize.h"
 
 @interface DVTSourceNodeTypes : NSObject
-+ (instancetype)nodeTypeNameForId:(NSString *)nodeId;
++ (instancetype)nodeTypeNameForId:(NSInteger)nodeId;
 + (NSInteger)nodeTypesCount;
 @end
 

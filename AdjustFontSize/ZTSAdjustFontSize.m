@@ -8,8 +8,6 @@
 
 #import "ZTSAdjustFontSize.h"
 
-static NSArray *ZTSNodeTypes;
-
 @interface DVTSourceNodeTypes : NSObject
 + (instancetype)nodeTypeNameForId:(NSString *)nodeId;
 + (NSInteger)nodeTypesCount;
@@ -21,6 +19,7 @@ static NSArray *ZTSNodeTypes;
 - (NSFont *)fontForNodeType:(DVTSourceNodeTypes *)nodeType;
 @end
 
+static NSMutableDictionary *ZTSIdentifiersToModify;
 
 static ZTSAdjustFontSize *sharedPlugin;
 
@@ -45,8 +44,9 @@ static ZTSAdjustFontSize *sharedPlugin;
 
 - (id)initWithBundle:(NSBundle *)plugin {
     if (self = [super init]) {
+
         self.bundle = plugin;
-        [self _setupNodeTypes];
+        [self _setupSourceNodeTypesIdentifiersMapping];
         [self _setupMenu];
     }
     return self;
@@ -60,51 +60,53 @@ static ZTSAdjustFontSize *sharedPlugin;
 #pragma mark - Handlers
 
 - (void)_increaseFontSizeHandler {
-    DVTFontAndColorTheme *currentTheme = [self _currentTheme];
-    [self _enumerateFontsForTheme:currentTheme usingBlock:^(NSFont *font, NSString *nodeTypeID, DVTSourceNodeTypes *nodeType, BOOL *stop) {
+    __weak DVTFontAndColorTheme *currentTheme = [self _currentTheme];
+    [self _enumerateFontsForTheme:currentTheme usingBlock:^(NSFont *font, NSInteger nodeTypeID, BOOL *stop) {
         NSFont *newFont = [NSFont fontWithDescriptor:font.fontDescriptor size:font.pointSize + 1];
-        [currentTheme setFont:newFont forNodeTypes:[NSIndexSet indexSetWithIndex:[ZTSNodeTypes indexOfObjectIdenticalTo:nodeTypeID]]];
+        [currentTheme setFont:newFont
+                 forNodeTypes:[NSIndexSet indexSetWithIndex:nodeTypeID]];
     }];
 }
 
 - (void)_decreaseFontSizeHandler {
-    DVTFontAndColorTheme *currentTheme = [self _currentTheme];
-    [self _enumerateFontsForTheme:currentTheme usingBlock:^(NSFont *font, NSString *nodeTypeID, DVTSourceNodeTypes *nodeType, BOOL *stop) {
+    __weak DVTFontAndColorTheme *currentTheme = [self _currentTheme];
+    [self _enumerateFontsForTheme:currentTheme usingBlock:^(NSFont *font, NSInteger nodeTypeID, BOOL *stop) {
         NSFont *newFont = [NSFont fontWithDescriptor:font.fontDescriptor size:font.pointSize - 1];
-        [currentTheme setFont:newFont forNodeTypes:[NSIndexSet indexSetWithIndex:[ZTSNodeTypes indexOfObjectIdenticalTo:nodeTypeID]]];
+        [currentTheme setFont:newFont
+                 forNodeTypes:[NSIndexSet indexSetWithIndex:nodeTypeID]];
     }];
 }
 
 #pragma mark - Private
 
-- (void)_setupNodeTypes {
+- (void)_setupSourceNodeTypesIdentifiersMapping {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        ZTSNodeTypes = @[
-                         @"xcode.syntax.attribute",
-                         @"xcode.syntax.character",
-                         @"xcode.syntax.comment",
-                         @"xcode.syntax.comment.doc",
-                         @"xcode.syntax.comment.doc.keyword",
-                         @"xcode.syntax.identifier.class",
-                         @"xcode.syntax.identifier.class.system",
-                         @"xcode.syntax.identifier.constant",
-                         @"xcode.syntax.identifier.constant.system",
-                         @"xcode.syntax.identifier.function",
-                         @"xcode.syntax.identifier.function.system",
-                         @"xcode.syntax.identifier.macro",
-                         @"xcode.syntax.identifier.macro.system",
-                         @"xcode.syntax.identifier.type",
-                         @"xcode.syntax.identifier.type.system",
-                         @"xcode.syntax.identifier.variable",
-                         @"xcode.syntax.identifier.variable.system",
-                         @"xcode.syntax.keyword",
-                         @"xcode.syntax.number",
-                         @"xcode.syntax.plain",
-                         @"xcode.syntax.preprocessor",
-                         @"xcode.syntax.string",
-                         @"xcode.syntax.url",
-                         ];
+        ZTSIdentifiersToModify = [@{
+            @"xcode.syntax.attribute" : @(NSNotFound),
+            @"xcode.syntax.character" : @(NSNotFound),
+            @"xcode.syntax.comment" : @(NSNotFound),
+            @"xcode.syntax.comment.doc" : @(NSNotFound),
+            @"xcode.syntax.comment.doc.keyword" : @(NSNotFound),
+            @"xcode.syntax.identifier.class" : @(NSNotFound),
+            @"xcode.syntax.identifier.class.system" : @(NSNotFound),
+            @"xcode.syntax.identifier.constant" : @(NSNotFound),
+            @"xcode.syntax.identifier.constant.system" : @(NSNotFound),
+            @"xcode.syntax.identifier.function" : @(NSNotFound),
+            @"xcode.syntax.identifier.function.system" : @(NSNotFound),
+            @"xcode.syntax.identifier.macro" : @(NSNotFound),
+            @"xcode.syntax.identifier.macro.system" : @(NSNotFound),
+            @"xcode.syntax.identifier.type" : @(NSNotFound),
+            @"xcode.syntax.identifier.type.system" : @(NSNotFound),
+            @"xcode.syntax.identifier.variable" : @(NSNotFound),
+            @"xcode.syntax.identifier.variable.system" : @(NSNotFound),
+            @"xcode.syntax.keyword" : @(NSNotFound),
+            @"xcode.syntax.number" : @(NSNotFound),
+            @"xcode.syntax.plain" : @(NSNotFound),
+            @"xcode.syntax.preprocessor" : @(NSNotFound),
+            @"xcode.syntax.string" : @(NSNotFound),
+            @"xcode.syntax.url" : @(NSNotFound),
+        } mutableCopy];
     });
 }
 
@@ -118,7 +120,6 @@ static ZTSAdjustFontSize *sharedPlugin;
                                                                    keyEquivalent:@"+"];
         increaseFontSizeMenuItem.target = self;
         [[menuItem submenu] addItem:increaseFontSizeMenuItem];
-        
         NSMenuItem *decreaseFontSizeMenuItem = [[NSMenuItem alloc] initWithTitle:@"Decrease font size"
                                                                           action:@selector(_decreaseFontSizeHandler)
                                                                    keyEquivalent:@"-"];
@@ -133,18 +134,31 @@ static ZTSAdjustFontSize *sharedPlugin;
     return theme;
 }
 
-- (void)_enumerateFontsForTheme:(DVTFontAndColorTheme *)theme usingBlock:(void (^)(NSFont *font, NSString *nodeTypeID, DVTSourceNodeTypes *nodeType, BOOL *stop))block {
+- (void)_enumerateFontsForTheme:(DVTFontAndColorTheme *)theme usingBlock:(void (^)(NSFont *font, NSInteger nodeTypeID, BOOL *stop))block {
+    [self _initializeMappingIfNeeded];
+    NSLog(@"ZTSIdentifiersToModify %@",ZTSIdentifiersToModify);
+    __weak id weakTheme = theme;
+    [ZTSIdentifiersToModify enumerateKeysAndObjectsUsingBlock:^(NSString *identifier, NSNumber *nodeId, BOOL *stop) {
+        NSFont *font = [weakTheme fontForNodeType:[nodeId integerValue]];
+        NSLog(@"%@ <%@> %@", identifier, nodeId, font);
+        block(font, [nodeId integerValue], stop);
+    }];
+}
+
+- (void)_initializeMappingIfNeeded {
+    NSInteger anyValue = [[[ZTSIdentifiersToModify allValues] firstObject] integerValue];
+    if (anyValue != NSNotFound) {
+        return;
+    }
+
     id sourceNodeTypesClass = NSClassFromString(@"DVTSourceNodeTypes");
-    BOOL stop = NO;
-    for (NSString *nodeNameId in ZTSNodeTypes) {
-        DVTSourceNodeTypes *sourceNodeTypes = [sourceNodeTypesClass nodeTypeNameForId:nodeNameId];
-        NSFont *font = [theme fontForNodeType:sourceNodeTypes];
-        block(font, nodeNameId, sourceNodeTypes, &stop);
-        if (stop) {
-            break;
+    for (NSInteger i = 0; i < [sourceNodeTypesClass nodeTypesCount]; ++i) {
+        NSString *identifier = [sourceNodeTypesClass nodeTypeNameForId:i];
+        if (ZTSIdentifiersToModify[identifier]) {
+            // map only known identifiers so we won't change other node types
+            ZTSIdentifiersToModify[identifier] = @(i);
         }
     }
-    
 }
 
 @end

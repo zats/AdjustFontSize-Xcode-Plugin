@@ -8,6 +8,12 @@
 
 #import "ZTSAdjustFontSize.h"
 
+typedef NSFont *(^ZTSFontModifier)(NSFont *font);
+
+static NSString *const ZTSSourceTextSettingsChangedNotification = @"DVTFontAndColorSourceTextSettingsChangedNotification";
+static NSString *const ZTSConsoleSettingsChangedNotification = @"DVTFontAndColorConsoleSettingsChangedNotification";
+static NSString *const ZTSGeneralUISettingsChangedNotification = @"DVTFontAndColorGeneralUISettingsChangedNotification";
+
 @interface DVTSourceNodeTypes : NSObject
 + (instancetype)nodeTypeNameForId:(NSInteger)nodeId;
 + (NSInteger)nodeTypesCount;
@@ -19,7 +25,7 @@
 - (NSFont *)fontForNodeType:(NSInteger)nodeType;
 @end
 
-static NSMutableDictionary *ZTSIdentifiersToModify;
+static NSDictionary *ZTSIdentifiersToModify;
 
 static ZTSAdjustFontSize *sharedPlugin;
 
@@ -60,71 +66,75 @@ static ZTSAdjustFontSize *sharedPlugin;
 #pragma mark - Handlers
 
 - (void)_increaseFontSizeHandler {
-    __weak DVTFontAndColorTheme *currentTheme = [self _currentTheme];
-    [self _enumerateFontsForTheme:currentTheme usingBlock:^(NSFont *font, NSInteger nodeTypeID, BOOL *stop) {
-        NSFont *newFont = [NSFont fontWithDescriptor:font.fontDescriptor size:font.pointSize + 1];
-        [currentTheme setFont:newFont
-                 forNodeTypes:[NSIndexSet indexSetWithIndex:nodeTypeID]];
+    [self _updateFontsWithModifier:^NSFont *(NSFont *font) {
+        return [NSFont fontWithDescriptor:font.fontDescriptor
+                                     size:font.pointSize + 1];
     }];
 }
 
 - (void)_decreaseFontSizeHandler {
+    [self _updateFontsWithModifier:^NSFont *(NSFont *font) {
+        return [NSFont fontWithDescriptor:font.fontDescriptor
+                                     size:font.pointSize - 1];
+    }];
+}
+
+- (void)_updateFontsWithModifier:(ZTSFontModifier)modifier {
     __weak DVTFontAndColorTheme *currentTheme = [self _currentTheme];
+    NSMutableDictionary *grouppedFonts = [NSMutableDictionary dictionary];
     [self _enumerateFontsForTheme:currentTheme usingBlock:^(NSFont *font, NSInteger nodeTypeID, BOOL *stop) {
-        NSFont *newFont = [NSFont fontWithDescriptor:font.fontDescriptor size:font.pointSize - 1];
-        [currentTheme setFont:newFont
-                 forNodeTypes:[NSIndexSet indexSetWithIndex:nodeTypeID]];
+        if (!grouppedFonts[font]) {
+            grouppedFonts[font] = [NSMutableIndexSet indexSetWithIndex:nodeTypeID];
+        } else {
+            [grouppedFonts[font] addIndex:nodeTypeID];
+        }
+    }];
+    [grouppedFonts enumerateKeysAndObjectsUsingBlock:^(NSFont *font, NSIndexSet *indexSet, BOOL *stop) {
+        [currentTheme setFont:modifier(font)
+                 forNodeTypes:indexSet];
     }];
 }
 
 #pragma mark - Private
 
 - (void)_setupSourceNodeTypesIdentifiersMapping {
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        ZTSIdentifiersToModify = [@{
-            @"xcode.syntax.attribute" : @(NSNotFound),
-            @"xcode.syntax.character" : @(NSNotFound),
-            @"xcode.syntax.comment" : @(NSNotFound),
-            @"xcode.syntax.comment.doc" : @(NSNotFound),
-            @"xcode.syntax.comment.doc.keyword" : @(NSNotFound),
-            @"xcode.syntax.identifier.class" : @(NSNotFound),
-            @"xcode.syntax.identifier.class.system" : @(NSNotFound),
-            @"xcode.syntax.identifier.constant" : @(NSNotFound),
-            @"xcode.syntax.identifier.constant.system" : @(NSNotFound),
-            @"xcode.syntax.identifier.function" : @(NSNotFound),
-            @"xcode.syntax.identifier.function.system" : @(NSNotFound),
-            @"xcode.syntax.identifier.macro" : @(NSNotFound),
-            @"xcode.syntax.identifier.macro.system" : @(NSNotFound),
-            @"xcode.syntax.identifier.type" : @(NSNotFound),
-            @"xcode.syntax.identifier.type.system" : @(NSNotFound),
-            @"xcode.syntax.identifier.variable" : @(NSNotFound),
-            @"xcode.syntax.identifier.variable.system" : @(NSNotFound),
-            @"xcode.syntax.keyword" : @(NSNotFound),
-            @"xcode.syntax.number" : @(NSNotFound),
-            @"xcode.syntax.plain" : @(NSNotFound),
-            @"xcode.syntax.preprocessor" : @(NSNotFound),
-            @"xcode.syntax.string" : @(NSNotFound),
-            @"xcode.syntax.url" : @(NSNotFound),
-        } mutableCopy];
-    });
+    NSSet *knownIdentifiers = [NSSet setWithObjects:
+        @"xcode.syntax.attribute", @"xcode.syntax.character", @"xcode.syntax.comment", @"xcode.syntax.comment.doc",
+        @"xcode.syntax.comment.doc.keyword", @"xcode.syntax.identifier.class", @"xcode.syntax.identifier.class.system",
+        @"xcode.syntax.identifier.constant", @"xcode.syntax.identifier.constant.system", @"xcode.syntax.identifier.function",
+        @"xcode.syntax.identifier.function.system", @"xcode.syntax.identifier.macro", @"xcode.syntax.identifier.macro.system",
+        @"xcode.syntax.identifier.type", @"xcode.syntax.identifier.type.system", @"xcode.syntax.identifier.variable",
+        @"xcode.syntax.identifier.variable.system", @"xcode.syntax.keyword", @"xcode.syntax.number",
+        @"xcode.syntax.plain", @"xcode.syntax.preprocessor", @"xcode.syntax.string", @"xcode.syntax.url", nil
+    ];
+    NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
+    id sourceNodeTypesClass = NSClassFromString(@"DVTSourceNodeTypes");
+    for (NSInteger index = 0; index < [sourceNodeTypesClass nodeTypesCount]; ++index) {
+        NSString *identifier = [sourceNodeTypesClass nodeTypeNameForId:index];
+        if ([knownIdentifiers containsObject:identifier]) {
+            dictionary[identifier] = @(index);
+        }
+    }
+    ZTSIdentifiersToModify = [dictionary copy];
 }
 
 - (void)_setupMenu {
     NSMenuItem *menuItem = [[NSApp mainMenu] itemWithTitle:@"View"];
     if (menuItem) {
         [[menuItem submenu] addItem:[NSMenuItem separatorItem]];
-        
-        NSMenuItem *increaseFontSizeMenuItem = [[NSMenuItem alloc] initWithTitle:@"Increase font size"
-                                                                          action:@selector(_increaseFontSizeHandler)
-                                                                   keyEquivalent:@"+"];
-        increaseFontSizeMenuItem.target = self;
-        [[menuItem submenu] addItem:increaseFontSizeMenuItem];
-        NSMenuItem *decreaseFontSizeMenuItem = [[NSMenuItem alloc] initWithTitle:@"Decrease font size"
-                                                                          action:@selector(_decreaseFontSizeHandler)
-                                                                   keyEquivalent:@"-"];
-        decreaseFontSizeMenuItem.target = self;
-        [[menuItem submenu] addItem:decreaseFontSizeMenuItem];
+        NSMenuItem *fontSize = [[menuItem submenu] addItemWithTitle:@"Font size"
+                                                             action:nil
+                                                      keyEquivalent:@""];
+        NSMenu *submenu = [[NSMenu alloc] init];
+        fontSize.submenu = submenu;
+        NSMenuItem *increase = [submenu addItemWithTitle:@"Increase"
+                                                  action:@selector(_increaseFontSizeHandler)
+                                           keyEquivalent:@"+"];
+        increase.target = self;
+        NSMenuItem *decrease = [submenu addItemWithTitle:@"Decrease"
+                                                  action:@selector(_decreaseFontSizeHandler)
+                                           keyEquivalent:@"-"];
+        decrease.target = self;
     }
 }
 
@@ -135,28 +145,11 @@ static ZTSAdjustFontSize *sharedPlugin;
 }
 
 - (void)_enumerateFontsForTheme:(DVTFontAndColorTheme *)theme usingBlock:(void (^)(NSFont *font, NSInteger nodeTypeID, BOOL *stop))block {
-    [self _initializeMappingIfNeeded];
     __weak id weakTheme = theme;
     [ZTSIdentifiersToModify enumerateKeysAndObjectsUsingBlock:^(NSString *identifier, NSNumber *nodeId, BOOL *stop) {
         NSFont *font = [weakTheme fontForNodeType:[nodeId integerValue]];
         block(font, [nodeId integerValue], stop);
     }];
-}
-
-- (void)_initializeMappingIfNeeded {
-    NSInteger anyValue = [[[ZTSIdentifiersToModify allValues] firstObject] integerValue];
-    if (anyValue != NSNotFound) {
-        return;
-    }
-
-    id sourceNodeTypesClass = NSClassFromString(@"DVTSourceNodeTypes");
-    for (NSInteger i = 0; i < [sourceNodeTypesClass nodeTypesCount]; ++i) {
-        NSString *identifier = [sourceNodeTypesClass nodeTypeNameForId:i];
-        if (ZTSIdentifiersToModify[identifier]) {
-            // map only known identifiers so we won't change other node types
-            ZTSIdentifiersToModify[identifier] = @(i);
-        }
-    }
 }
 
 @end

@@ -93,6 +93,8 @@ static ZTSAdjustFontSize *sharedPlugin;
         [currentTheme setFont:modifier(font)
                  forNodeTypes:indexSet];
     }];
+    
+    [self _updateConsoleFontsWithModifier:modifier];
 }
 
 #pragma mark - Private
@@ -150,6 +152,22 @@ static ZTSAdjustFontSize *sharedPlugin;
         NSFont *font = [weakTheme fontForNodeType:[nodeId integerValue]];
         block(font, [nodeId integerValue], stop);
     }];
+}
+
+- (void)_updateConsoleFontsWithModifier:(ZTSFontModifier)modifier {
+    __weak DVTFontAndColorTheme *currentTheme = [self _currentTheme];
+    NSArray *consoleTextKeys = @[@"_consoleDebuggerPromptTextFont",
+                                 @"_consoleDebuggerInputTextFont",
+                                 @"_consoleDebuggerOutputTextFont",
+                                 @"_consoleExecutableInputTextFont",
+                                 @"_consoleExecutableOutputTextFont"];
+    
+    for (NSString *key in consoleTextKeys) {
+        NSFont *font = [currentTheme valueForKey:key];
+        NSFont *modifiedFont = modifier(font);
+        
+        [currentTheme setValue:modifiedFont forKey:key];
+    };
 }
 
 @end

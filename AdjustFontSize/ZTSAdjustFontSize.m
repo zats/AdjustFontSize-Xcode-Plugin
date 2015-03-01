@@ -25,13 +25,10 @@ static NSString *const ZTSGeneralUISettingsChangedNotification = @"DVTFontAndCol
 - (NSFont *)fontForNodeType:(NSInteger)nodeType;
 @end
 
-@interface IDEConsoleTextView : NSObject
-- (void)_themeFontsAndColorsUpdated;
-@end
 
 static NSDictionary *ZTSIdentifiersToModify;
-
 static ZTSAdjustFontSize *sharedPlugin;
+
 
 @interface ZTSAdjustFontSize()
 @property (nonatomic, strong) NSBundle *bundle;
@@ -84,12 +81,8 @@ static ZTSAdjustFontSize *sharedPlugin;
 }
 
 - (void)_updateFontsWithModifier:(ZTSFontModifier)modifier {
-    if ([[self _currentWindowResponder] isKindOfClass:[IDEConsoleTextView class]]) {
-        [self _updateConsoleFontsWithModifier:modifier];
-    }
-    else {
-        [self _updateEditorFontsWithModifier:modifier];
-    }
+    [self _updateConsoleFontsWithModifier:modifier];
+    [self _updateEditorFontsWithModifier:modifier];
 }
 
 #pragma mark - Private
@@ -149,8 +142,8 @@ static ZTSAdjustFontSize *sharedPlugin;
     }];
 }
 
-- (NSResponder *)_currentWindowResponder {
-    return [[[NSApplication sharedApplication] keyWindow] firstResponder];
+- (id)_currentWindowResponder {
+    return [NSApplication sharedApplication].keyWindow.firstResponder;
 }
 
 - (void)_updateEditorFontsWithModifier:(ZTSFontModifier)modifier {
@@ -164,28 +157,22 @@ static ZTSAdjustFontSize *sharedPlugin;
         }
     }];
     [grouppedFonts enumerateKeysAndObjectsUsingBlock:^(NSFont *font, NSIndexSet *indexSet, BOOL *stop) {
-        [currentTheme setFont:modifier(font)
-                 forNodeTypes:indexSet];
+        [currentTheme setFont:modifier(font) forNodeTypes:indexSet];
     }];
 }
 
 - (void)_updateConsoleFontsWithModifier:(ZTSFontModifier)modifier {
-    __weak DVTFontAndColorTheme *currentTheme = [self _currentTheme];
-    NSArray *consoleTextKeys = @[@"_consoleDebuggerPromptTextFont",
-                                 @"_consoleDebuggerInputTextFont",
-                                 @"_consoleDebuggerOutputTextFont",
-                                 @"_consoleExecutableInputTextFont",
-                                 @"_consoleExecutableOutputTextFont"];
+    DVTFontAndColorTheme *currentTheme = [self _currentTheme];
+    static NSArray *consoleTextKeys;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        consoleTextKeys = @[@"_consoleDebuggerPromptTextFont", @"_consoleDebuggerInputTextFont", @"_consoleDebuggerOutputTextFont", @"_consoleExecutableInputTextFont", @"_consoleExecutableOutputTextFont"];
+    });
     
     for (NSString *key in consoleTextKeys) {
         NSFont *font = [currentTheme valueForKey:key];
         NSFont *modifiedFont = modifier(font);
-        
         [currentTheme setValue:modifiedFont forKey:key];
-    };
-  
-    if ([[self _currentWindowResponder] respondsToSelector:@selector(_themeFontsAndColorsUpdated)]) {
-        [(IDEConsoleTextView *)[self _currentWindowResponder] _themeFontsAndColorsUpdated];
     }
 }
 

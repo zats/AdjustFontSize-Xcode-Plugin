@@ -57,8 +57,10 @@ static NSDictionary *ZTSIdentifiersToModify;
 - (id)initWithBundle:(NSBundle *)plugin {
     if (self = [super init]) {
         self.bundle = plugin;
-        [self _setupSourceNodeTypesIdentifiersMapping];
-        [self _setupMenu];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self _setupSourceNodeTypesIdentifiersMapping];
+            [self _setupMenu];
+        });
     }
     return self;
 }

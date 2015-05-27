@@ -1,12 +1,13 @@
 //
-//  ZTSAdjustFontSize.m
-//  ZTSAdjustFontSize
+//  AdjustFontSize.m
+//  AdjustFontSize
 //
-//  Created by Sasha Zats on 4/8/14.
-//    Copyright (c) 2014 Sasha Zats. All rights reserved.
+//  Created by Sash Zats on 5/26/15.
+//  Copyright (c) 2015 Sash Zats. All rights reserved.
 //
 
 #import "ZTSAdjustFontSize.h"
+
 
 typedef NSFont *(^ZTSFontModifier)(NSFont *font);
 
@@ -14,10 +15,14 @@ static NSString *const ZTSSourceTextSettingsChangedNotification = @"DVTFontAndCo
 static NSString *const ZTSConsoleSettingsChangedNotification = @"DVTFontAndColorConsoleSettingsChangedNotification";
 static NSString *const ZTSGeneralUISettingsChangedNotification = @"DVTFontAndColorGeneralUISettingsChangedNotification";
 
+static NSDictionary *ZTSIdentifiersToModify;
+
+
 @interface DVTSourceNodeTypes : NSObject
 + (instancetype)nodeTypeNameForId:(NSInteger)nodeId;
 + (NSInteger)nodeTypesCount;
 @end
+
 
 @interface DVTFontAndColorTheme : NSObject
 + (instancetype)currentTheme;
@@ -26,23 +31,23 @@ static NSString *const ZTSGeneralUISettingsChangedNotification = @"DVTFontAndCol
 @end
 
 
-static NSDictionary *ZTSIdentifiersToModify;
-static ZTSAdjustFontSize *sharedPlugin;
-
-
 @interface ZTSAdjustFontSize()
-@property (nonatomic, strong) NSBundle *bundle;
+
+@property (nonatomic, strong, readwrite) NSBundle *bundle;
+
 @end
+
 
 @implementation ZTSAdjustFontSize
 
 #pragma mark - Lifecycle
 
 + (void)pluginDidLoad:(NSBundle *)plugin {
-    static id sharedPlugin = nil;
     static dispatch_once_t onceToken;
-    NSString *currentApplicationName = [[NSBundle mainBundle] infoDictionary][@"CFBundleName"];
+    
+    NSString *currentApplicationName = [NSBundle mainBundle].infoDictionary[@"CFBundleName"];
     if ([currentApplicationName isEqual:@"Xcode"]) {
+        static ZTSAdjustFontSize *sharedPlugin;
         dispatch_once(&onceToken, ^{
             sharedPlugin = [[self alloc] initWithBundle:plugin];
         });
@@ -51,7 +56,6 @@ static ZTSAdjustFontSize *sharedPlugin;
 
 - (id)initWithBundle:(NSBundle *)plugin {
     if (self = [super init]) {
-
         self.bundle = plugin;
         [self _setupSourceNodeTypesIdentifiersMapping];
         [self _setupMenu];
@@ -175,5 +179,6 @@ static ZTSAdjustFontSize *sharedPlugin;
         [currentTheme setValue:modifiedFont forKey:key];
     }
 }
+
 
 @end

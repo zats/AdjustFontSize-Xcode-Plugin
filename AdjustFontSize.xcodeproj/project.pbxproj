@@ -7,78 +7,76 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		611253C018F3F30800ADECBB /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 611253BF18F3F30800ADECBB /* AppKit.framework */; };
-		611253C218F3F30800ADECBB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 611253C118F3F30800ADECBB /* Foundation.framework */; };
-		611253C818F3F30800ADECBB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 611253C618F3F30800ADECBB /* InfoPlist.strings */; };
-		611253CB18F3F30800ADECBB /* ZTSAdjustFontSize.m in Sources */ = {isa = PBXBuildFile; fileRef = 611253CA18F3F30800ADECBB /* ZTSAdjustFontSize.m */; };
+		5CB283DA1B1558AD0079784E /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CB283D91B1558AD0079784E /* AppKit.framework */; };
+		5CB283DC1B1558AD0079784E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CB283DB1B1558AD0079784E /* Foundation.framework */; };
+		5CB283E11B1558AD0079784E /* AdjustFontSize.xcscheme in Resources */ = {isa = PBXBuildFile; fileRef = 5CB283E01B1558AD0079784E /* AdjustFontSize.xcscheme */; };
+		5CB283E41B1558AD0079784E /* ZTSAdjustFontSize.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CB283E31B1558AD0079784E /* ZTSAdjustFontSize.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		611253BC18F3F30800ADECBB /* AdjustFontSize.xcplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AdjustFontSize.xcplugin; sourceTree = BUILT_PRODUCTS_DIR; };
-		611253BF18F3F30800ADECBB /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
-		611253C118F3F30800ADECBB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		611253C518F3F30800ADECBB /* AdjustFontSize-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "AdjustFontSize-Info.plist"; sourceTree = "<group>"; };
-		611253C718F3F30800ADECBB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		611253C918F3F30800ADECBB /* ZTSAdjustFontSize.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZTSAdjustFontSize.h; sourceTree = "<group>"; };
-		611253CA18F3F30800ADECBB /* ZTSAdjustFontSize.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZTSAdjustFontSize.m; sourceTree = "<group>"; };
-		611253CC18F3F30800ADECBB /* AdjustFontSize-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AdjustFontSize-Prefix.pch"; sourceTree = "<group>"; };
+		5CB283D61B1558AD0079784E /* AdjustFontSize.xcplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AdjustFontSize.xcplugin; sourceTree = BUILT_PRODUCTS_DIR; };
+		5CB283D91B1558AD0079784E /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
+		5CB283DB1B1558AD0079784E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		5CB283DF1B1558AD0079784E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5CB283E01B1558AD0079784E /* AdjustFontSize.xcscheme */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = AdjustFontSize.xcscheme; path = AdjustFontSize.xcodeproj/xcshareddata/xcschemes/AdjustFontSize.xcscheme; sourceTree = SOURCE_ROOT; };
+		5CB283E21B1558AD0079784E /* ZTSAdjustFontSize.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZTSAdjustFontSize.h; sourceTree = "<group>"; };
+		5CB283E31B1558AD0079784E /* ZTSAdjustFontSize.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZTSAdjustFontSize.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		611253B918F3F30800ADECBB /* Frameworks */ = {
+		5CB283D41B1558AD0079784E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				611253C018F3F30800ADECBB /* AppKit.framework in Frameworks */,
-				611253C218F3F30800ADECBB /* Foundation.framework in Frameworks */,
+				5CB283DA1B1558AD0079784E /* AppKit.framework in Frameworks */,
+				5CB283DC1B1558AD0079784E /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		611253B318F3F30800ADECBB = {
+		5CB283CD1B1558AD0079784E = {
 			isa = PBXGroup;
 			children = (
-				611253C318F3F30800ADECBB /* AdjustFontSize */,
-				611253BE18F3F30800ADECBB /* Frameworks */,
-				611253BD18F3F30800ADECBB /* Products */,
+				5CB283DD1B1558AD0079784E /* AdjustFontSize */,
+				5CB283D81B1558AD0079784E /* Frameworks */,
+				5CB283D71B1558AD0079784E /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		611253BD18F3F30800ADECBB /* Products */ = {
+		5CB283D71B1558AD0079784E /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				611253BC18F3F30800ADECBB /* AdjustFontSize.xcplugin */,
+				5CB283D61B1558AD0079784E /* AdjustFontSize.xcplugin */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		611253BE18F3F30800ADECBB /* Frameworks */ = {
+		5CB283D81B1558AD0079784E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				611253BF18F3F30800ADECBB /* AppKit.framework */,
-				611253C118F3F30800ADECBB /* Foundation.framework */,
+				5CB283D91B1558AD0079784E /* AppKit.framework */,
+				5CB283DB1B1558AD0079784E /* Foundation.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		611253C318F3F30800ADECBB /* AdjustFontSize */ = {
+		5CB283DD1B1558AD0079784E /* AdjustFontSize */ = {
 			isa = PBXGroup;
 			children = (
-				611253C918F3F30800ADECBB /* ZTSAdjustFontSize.h */,
-				611253CA18F3F30800ADECBB /* ZTSAdjustFontSize.m */,
-				611253C418F3F30800ADECBB /* Supporting Files */,
+				5CB283E21B1558AD0079784E /* ZTSAdjustFontSize.h */,
+				5CB283E31B1558AD0079784E /* ZTSAdjustFontSize.m */,
+				5CB283DE1B1558AD0079784E /* Supporting Files */,
 			);
 			path = AdjustFontSize;
 			sourceTree = "<group>";
 		};
-		611253C418F3F30800ADECBB /* Supporting Files */ = {
+		5CB283DE1B1558AD0079784E /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				611253C518F3F30800ADECBB /* AdjustFontSize-Info.plist */,
-				611253C618F3F30800ADECBB /* InfoPlist.strings */,
-				611253CC18F3F30800ADECBB /* AdjustFontSize-Prefix.pch */,
+				5CB283DF1B1558AD0079784E /* Info.plist */,
+				5CB283E01B1558AD0079784E /* AdjustFontSize.xcscheme */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -86,13 +84,13 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		611253BB18F3F30800ADECBB /* AdjustFontSize */ = {
+		5CB283D51B1558AD0079784E /* AdjustFontSize */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 611253CF18F3F30800ADECBB /* Build configuration list for PBXNativeTarget "AdjustFontSize" */;
+			buildConfigurationList = 5CB283E71B1558AD0079784E /* Build configuration list for PBXNativeTarget "AdjustFontSize" */;
 			buildPhases = (
-				611253B818F3F30800ADECBB /* Sources */,
-				611253B918F3F30800ADECBB /* Frameworks */,
-				611253BA18F3F30800ADECBB /* Resources */,
+				5CB283D21B1558AD0079784E /* Sources */,
+				5CB283D31B1558AD0079784E /* Resources */,
+				5CB283D41B1558AD0079784E /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -100,71 +98,65 @@
 			);
 			name = AdjustFontSize;
 			productName = AdjustFontSize;
-			productReference = 611253BC18F3F30800ADECBB /* AdjustFontSize.xcplugin */;
+			productReference = 5CB283D61B1558AD0079784E /* AdjustFontSize.xcplugin */;
 			productType = "com.apple.product-type.bundle";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		611253B418F3F30800ADECBB /* Project object */ = {
+		5CB283CE1B1558AD0079784E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = ZTS;
-				LastUpgradeCheck = 0510;
-				ORGANIZATIONNAME = "Sasha Zats";
+				LastUpgradeCheck = 0640;
+				ORGANIZATIONNAME = "Sash Zats";
+				TargetAttributes = {
+					5CB283D51B1558AD0079784E = {
+						CreatedOnToolsVersion = 6.4;
+					};
+				};
 			};
-			buildConfigurationList = 611253B718F3F30800ADECBB /* Build configuration list for PBXProject "AdjustFontSize" */;
+			buildConfigurationList = 5CB283D11B1558AD0079784E /* Build configuration list for PBXProject "AdjustFontSize" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 			);
-			mainGroup = 611253B318F3F30800ADECBB;
-			productRefGroup = 611253BD18F3F30800ADECBB /* Products */;
+			mainGroup = 5CB283CD1B1558AD0079784E;
+			productRefGroup = 5CB283D71B1558AD0079784E /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				611253BB18F3F30800ADECBB /* AdjustFontSize */,
+				5CB283D51B1558AD0079784E /* AdjustFontSize */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		611253BA18F3F30800ADECBB /* Resources */ = {
+		5CB283D31B1558AD0079784E /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				611253C818F3F30800ADECBB /* InfoPlist.strings in Resources */,
+				5CB283E11B1558AD0079784E /* AdjustFontSize.xcscheme in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		611253B818F3F30800ADECBB /* Sources */ = {
+		5CB283D21B1558AD0079784E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				611253CB18F3F30800ADECBB /* ZTSAdjustFontSize.m in Sources */,
+				5CB283E41B1558AD0079784E /* ZTSAdjustFontSize.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
-/* Begin PBXVariantGroup section */
-		611253C618F3F30800ADECBB /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				611253C718F3F30800ADECBB /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
-
 /* Begin XCBuildConfiguration section */
-		611253CD18F3F30800ADECBB /* Debug */ = {
+		5CB283E51B1558AD0079784E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -179,11 +171,13 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -196,13 +190,12 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
-		611253CE18F3F30800ADECBB /* Release */ = {
+		5CB283E61B1558AD0079784E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -217,50 +210,46 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				COPY_PHASE_STRIP = NO;
 				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
-				SDKROOT = macosx;
+				MTL_ENABLE_DEBUG_INFO = NO;
 			};
 			name = Release;
 		};
-		611253D018F3F30800ADECBB /* Debug */ = {
+		5CB283E81B1558AD0079784E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEPLOYMENT_LOCATION = YES;
 				DSTROOT = "$(HOME)";
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "AdjustFontSize/AdjustFontSize-Prefix.pch";
-				INFOPLIST_FILE = "AdjustFontSize/AdjustFontSize-Info.plist";
+				INFOPLIST_FILE = AdjustFontSize/Info.plist;
 				INSTALL_PATH = "/Library/Application Support/Developer/Shared/Xcode/Plug-ins";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = xcplugin;
 			};
 			name = Debug;
 		};
-		611253D118F3F30800ADECBB /* Release */ = {
+		5CB283E91B1558AD0079784E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEPLOYMENT_LOCATION = YES;
 				DSTROOT = "$(HOME)";
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "AdjustFontSize/AdjustFontSize-Prefix.pch";
-				INFOPLIST_FILE = "AdjustFontSize/AdjustFontSize-Info.plist";
+				INFOPLIST_FILE = AdjustFontSize/Info.plist;
 				INSTALL_PATH = "/Library/Application Support/Developer/Shared/Xcode/Plug-ins";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = xcplugin;
 			};
@@ -269,25 +258,24 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		611253B718F3F30800ADECBB /* Build configuration list for PBXProject "AdjustFontSize" */ = {
+		5CB283D11B1558AD0079784E /* Build configuration list for PBXProject "AdjustFontSize" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				611253CD18F3F30800ADECBB /* Debug */,
-				611253CE18F3F30800ADECBB /* Release */,
+				5CB283E51B1558AD0079784E /* Debug */,
+				5CB283E61B1558AD0079784E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		611253CF18F3F30800ADECBB /* Build configuration list for PBXNativeTarget "AdjustFontSize" */ = {
+		5CB283E71B1558AD0079784E /* Build configuration list for PBXNativeTarget "AdjustFontSize" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				611253D018F3F30800ADECBB /* Debug */,
-				611253D118F3F30800ADECBB /* Release */,
+				5CB283E81B1558AD0079784E /* Debug */,
+				5CB283E91B1558AD0079784E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 611253B418F3F30800ADECBB /* Project object */;
+	rootObject = 5CB283CE1B1558AD0079784E /* Project object */;
 }

@@ -15,3 +15,9 @@ Install via [Alcatraz](https://github.com/mneorr/Alcatraz).
 OR
 
 Clone this repo, Build and restart Xcode.
+
+## Troubleshooting
+
+If you do not see the plugin menu anymore, most likely it means that you;ve updated Xcode and have an old version of the plugin. Simply re-install the plugin through Alcatraz or by cloning and building the repository.
+
+If it didn't help, please open an issue.

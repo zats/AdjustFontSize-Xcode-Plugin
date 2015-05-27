@@ -1,13 +1,15 @@
 //
-//  ZTSAdjustFontSize.h
-//  ZTSAdjustFontSize
+//  AdjustFontSize.h
+//  AdjustFontSize
 //
-//  Created by Sasha Zats on 4/8/14.
-//  Copyright (c) 2014 Sasha Zats. All rights reserved.
+//  Created by Sash Zats on 5/26/15.
+//  Copyright (c) 2015 Sash Zats. All rights reserved.
 //
 
 #import <AppKit/AppKit.h>
 
 @interface ZTSAdjustFontSize : NSObject
+
+@property (nonatomic, strong, readonly) NSBundle *bundle;
 
 @end

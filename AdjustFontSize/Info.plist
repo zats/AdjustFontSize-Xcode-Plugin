@@ -40,6 +40,7 @@
 		<string>8DC44374-2B35-4C57-A6FE-2AD66A36AAD9</string> <!-- 6.4 Beta -->
 		<string>5EDAC44F-8E0B-42C9-9BEF-E9C12EEC4949</string> <!-- 6.4 B4   -->
 		<string>AABB7188-E14E-4433-AD3B-5CD791EAD9A3</string> <!-- 7.0 Beta -->
+		<string>0420B86A-AA43-4792-9ED0-6FE0F2B16A13</string> <!---7.0 GM -->
 	</array>
 	<key>LSMinimumSystemVersion</key>
 	<string>$(MACOSX_DEPLOYMENT_TARGET)</string>

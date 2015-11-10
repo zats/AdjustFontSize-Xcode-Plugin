@@ -10,7 +10,7 @@ Simply hit `⌘ +` or `⌘ -` and all fonts will be adjusted. Plugin respects di
 
 ## Installation:
 
-Install via [Alcatraz](https://github.com/mneorr/Alcatraz).
+Install via [Alcatraz](https://github.com/alcatraz/Alcatraz).
 
 OR
 

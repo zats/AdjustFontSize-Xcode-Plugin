@@ -154,15 +154,15 @@ static NSDictionary *ZTSIdentifiersToModify;
 
 - (void)_updateEditorFontsWithModifier:(ZTSFontModifier)modifier {
     __weak DVTFontAndColorTheme *currentTheme = [self _currentTheme];
-    NSMutableDictionary *grouppedFonts = [NSMutableDictionary dictionary];
+    NSMutableDictionary *groupedFonts = [NSMutableDictionary dictionary];
     [self _enumerateFontsForTheme:currentTheme usingBlock:^(NSFont *font, NSInteger nodeTypeID, BOOL *stop) {
-        if (!grouppedFonts[font]) {
-            grouppedFonts[font] = [NSMutableIndexSet indexSetWithIndex:nodeTypeID];
+        if (!groupedFonts[font]) {
+            groupedFonts[font] = [NSMutableIndexSet indexSetWithIndex:nodeTypeID];
         } else {
-            [grouppedFonts[font] addIndex:nodeTypeID];
+            [groupedFonts[font] addIndex:nodeTypeID];
         }
     }];
-    [grouppedFonts enumerateKeysAndObjectsUsingBlock:^(NSFont *font, NSIndexSet *indexSet, BOOL *stop) {
+    [groupedFonts enumerateKeysAndObjectsUsingBlock:^(NSFont *font, NSIndexSet *indexSet, BOOL *stop) {
         [currentTheme setFont:modifier(font) forNodeTypes:indexSet];
     }];
 }

@@ -223,7 +223,10 @@ static NSString *const ZTSAdjustFontSizeIndependentZoomKey = @"ZTSAdjustFontSize
     }
     
     if ([[self _currentWindowResponder] respondsToSelector:NSSelectorFromString(@"_themeFontsAndColorsUpdated")]) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
         [[self _currentWindowResponder] performSelector:NSSelectorFromString(@"_themeFontsAndColorsUpdated") withObject:nil];
+#pragma clang diagnostic pop
     }
 }
 

@@ -274,6 +274,7 @@
 				5CB283E91B1558AD0079784E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

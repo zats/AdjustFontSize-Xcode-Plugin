@@ -138,12 +138,14 @@ static NSString *const ZTSAdjustFontSizeIndependentZoomKey = @"ZTSAdjustFontSize
         
         NSMenuItem *increase = [submenu addItemWithTitle:@"Increase"
                                                   action:@selector(_increaseFontSizeHandler)
-                                           keyEquivalent:@"+"];
+                                           keyEquivalent:@"="];
+        increase.keyEquivalentModifierMask = NSControlKeyMask;
         increase.target = self;
         
         NSMenuItem *decrease = [submenu addItemWithTitle:@"Decrease"
                                                   action:@selector(_decreaseFontSizeHandler)
                                            keyEquivalent:@"-"];
+        decrease.keyEquivalentModifierMask = NSControlKeyMask;
         decrease.target = self;
         
         NSMenuItem *independentZoom = [submenu addItemWithTitle:@"Adjust Editor and Console Independently"

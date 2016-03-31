@@ -1,4 +1,4 @@
-**UPDATE**: to avoid conflict with Interface Builder hotkeys are changed to `⌃-` and `⌃+`.
+**UPDATE**: to avoid conflict with Interface Builder hotkeys are changed to `Control -` and `Control +`.
 
 # AdjustFontSize
 

@@ -45,7 +45,7 @@ static NSString *const ZTSAdjustFontSizeIndependentZoomKey = @"ZTSAdjustFontSize
 
 + (void)pluginDidLoad:(NSBundle *)plugin {
     static dispatch_once_t onceToken;
-    
+
     NSString *currentApplicationName = [NSBundle mainBundle].infoDictionary[@"CFBundleName"];
     if ([currentApplicationName isEqual:@"Xcode"]) {
         static ZTSAdjustFontSize *sharedPlugin;
@@ -135,19 +135,19 @@ static NSString *const ZTSAdjustFontSizeIndependentZoomKey = @"ZTSAdjustFontSize
                                                       keyEquivalent:@""];
         NSMenu *submenu = [[NSMenu alloc] init];
         fontSize.submenu = submenu;
-        
+
         NSMenuItem *increase = [submenu addItemWithTitle:@"Increase"
                                                   action:@selector(_increaseFontSizeHandler)
                                            keyEquivalent:@"="];
         increase.keyEquivalentModifierMask = NSControlKeyMask;
         increase.target = self;
-        
+
         NSMenuItem *decrease = [submenu addItemWithTitle:@"Decrease"
                                                   action:@selector(_decreaseFontSizeHandler)
                                            keyEquivalent:@"-"];
         decrease.keyEquivalentModifierMask = NSControlKeyMask;
         decrease.target = self;
-        
+
         NSMenuItem *independentZoom = [submenu addItemWithTitle:@"Adjust Editor and Console Independently"
                                                          action:@selector(_saveIDEZoomIndependenceSetting:)
                                                   keyEquivalent:@""];
@@ -166,7 +166,7 @@ static NSString *const ZTSAdjustFontSizeIndependentZoomKey = @"ZTSAdjustFontSize
 
 - (void)_saveIDEZoomIndependenceSetting:(NSMenuItem *)menuItem {
     BOOL shouldIndependentlyZoom = (menuItem.state == NSOnState) ? NO : YES;
-    
+
     [[NSUserDefaults standardUserDefaults] setBool:shouldIndependentlyZoom forKey:ZTSAdjustFontSizeIndependentZoomKey];
     menuItem.state = (menuItem.state == NSOnState) ? NSOffState : NSOnState;
 }
@@ -215,13 +215,13 @@ static NSString *const ZTSAdjustFontSizeIndependentZoomKey = @"ZTSAdjustFontSize
                             @"_consoleExecutableInputTextFont",
                             @"_consoleExecutableOutputTextFont"];
     });
-    
+
     for (NSString *key in consoleTextKeys) {
         NSFont *font = [currentTheme valueForKey:key];
         NSFont *modifiedFont = modifier(font);
         [currentTheme setValue:modifiedFont forKey:key];
     }
-    
+
     if ([[self _currentWindowResponder] respondsToSelector:NSSelectorFromString(@"_themeFontsAndColorsUpdated")]) {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"

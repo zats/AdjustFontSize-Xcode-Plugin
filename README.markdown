@@ -1,5 +1,19 @@
 **UPDATE**: to avoid conflict with Interface Builder hotkeys are changed to `Control -` and `Control +`.
 
+# Customizing shortcuts
+
+1. Open Keyboard Shortcuts in System Preferences.app
+2. Click "+" under "App Shortcuts"
+3. Choose Xcode.app
+4. Type "Increase" under Menu Title
+5. Type in desired hotkey, for example `⌘ =` for command + plus
+6. Click "Add"
+7. Repeat 2 - 6 for "Decrease" menu title
+
+<img width="668" alt="screen shot 2016-06-10 at 10 32 32 pm" src="https://cloud.githubusercontent.com/assets/117041/15964393/ade650ee-2f5b-11e6-9bf4-87a1ebe8ddcf.png">
+Thanks [@agentk](https://github.com/agentk) for the idea!
+
+
 # AdjustFontSize
 
 ![screenshot](https://raw.github.com/zats/AdjustFontSize-Xcode-Plugin/master/README/xcode.png)

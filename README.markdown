@@ -1,3 +1,5 @@
+**Plugins manipulating UI (like this one) are not supported by Xcode 8**
+
 **UPDATE**: to avoid conflict with Interface Builder hotkeys are changed to `Control -` and `Control +`.
 
 # Customizing shortcuts
